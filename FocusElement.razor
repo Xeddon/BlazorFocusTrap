@@ -1,0 +1,12 @@
+﻿@code {
+    [CascadingParameter]
+    public FocusTrap FocusTrap { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    protected override void OnInitialized()
+    {
+        FocusTrap.FocusElementList.Add(Value);
+    }
+}
