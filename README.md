@@ -8,6 +8,7 @@ Blazor Interop for https://github.com/focus-trap/focus-trap
 npm install BlazorFocusTrap
 ```
 
+## Include scripts
 ```html
 <head>
   <script src="https://unpkg.com/tabbable/dist/index.umd.js"></script>
@@ -16,8 +17,17 @@ npm install BlazorFocusTrap
 </head>
 ```
 
+
+## Useage
 ```html
  <FocusTrap>
-     <input @bind="Number" class="form-control"/>
+     Only elements inside can be selected/tabbed
+ </FocusTrap>
+```
+
+```html
+ <FocusTrap>
+     Only elements inside and elements with class otherClass can be selected/tabbed
+     <FocusElement Value=".otherClass" />
  </FocusTrap>
 ```
