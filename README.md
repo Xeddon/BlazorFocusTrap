@@ -2,7 +2,7 @@
 
 Blazor Interop for https://github.com/focus-trap/focus-trap
 
-## Installation
+## Install with Nuget Package Manager
 
 ```
 Install-Package BlazorFocusTrap -Version 0.0.2
@@ -17,7 +17,7 @@ For Webassembly include the following scripts into wwwroot/index.html.
   <script src="https://unpkg.com/focus-trap/dist/focus-trap.umd.js"></script>
 ```
 
-## Include using in _Imports.razor.
+## Import the namespace in _Imports.razor.
 ```
 @using BlazorFocusTrap
 ```
