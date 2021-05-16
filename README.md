@@ -8,7 +8,7 @@ Blazor Interop for https://github.com/focus-trap/focus-trap
 Install-Package BlazorFocusTrap -Version 0.0.2
 ```
 
-## Include dependencies from javascript focus-trap
+## Include dependencies from original javascript focus-trap
 
 For Server Side Blazor include the following scripts into Pages/_Host.cshtml.
 For Webassembly include the following scripts into wwwroot/index.html.
