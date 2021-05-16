@@ -10,8 +10,8 @@ Install-Package BlazorFocusTrap -Version 0.0.2
 
 ## Include dependencies from original javascript focus-trap
 
-For Server Side Blazor include the following scripts into Pages/_Host.cshtml.
-For Webassembly include the following scripts into wwwroot/index.html.
+- For Server Side Blazor include the following scripts into Pages/_Host.cshtml.  
+- For Webassembly include the following scripts into wwwroot/index.html.
 ```html
   <script src="https://unpkg.com/tabbable/dist/index.umd.js"></script>
   <script src="https://unpkg.com/focus-trap/dist/focus-trap.umd.js"></script>
@@ -28,8 +28,8 @@ For Webassembly include the following scripts into wwwroot/index.html.
       Only elements inside can be selected/tabbed
   </FocusTrap>
 ```
-For more examples see Demo/Pages/Index.razor.
+For more examples see [demo project](https://github.com/Xeddon/BlazorFocusTrap/blob/master/Demo/Pages/Index.razor).
 
 ## Limitations
-- At the moment there is only one `<FocusTrap>` for same time rendered supported and will be fixed in the future.
+- At the moment there is only one `<FocusTrap>` at same time rendered supported and will be fixed in the future.
 - If you need more methods from original focus-trap you can request for feature or contribute it.
