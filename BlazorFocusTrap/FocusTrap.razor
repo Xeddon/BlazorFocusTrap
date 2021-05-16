@@ -1,0 +1,91 @@
+﻿@implements IAsyncDisposable
+@inject IJSRuntime Js
+
+<div @ref="_focusTrapDivElementReference" @attributes="Attributes">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Func<ElementReference> ForElementReference { get; set; }
+
+    [Parameter]
+    public string ForQuerySelector { get; set; }
+
+    [Parameter]
+    public bool AutoActivate { get; set; } = true;
+
+    [Parameter]
+    public EventCallback OnActivate
+    {
+        get => _focusTrapEventCallbacks.OnActivate;
+        set => _focusTrapEventCallbacks.OnActivate = value;
+    }
+
+    [Parameter]
+    public EventCallback OnDeactivate
+    {
+        get => _focusTrapEventCallbacks.OnDeactivate;
+        set => _focusTrapEventCallbacks.OnDeactivate = value;
+    }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> Attributes { get; set; }
+
+    public async ValueTask ActivateAsync()
+    {
+        if (_module != null)
+            await _module.InvokeVoidAsync("activate");
+    }
+
+    public async ValueTask DeactivateAsync()
+    {
+        if (_module != null)
+            await _module.InvokeVoidAsync("deactivate");
+    }
+
+    public IList<string> FocusTrapElementList { get; } = new List<string>();
+    private ElementReference _focusTrapDivElementReference;
+    private IJSObjectReference _module;
+    private DotNetObjectReference<FocusTrapEventCallbacks> _dotNetObjectReference;
+    private FocusTrapEventCallbacks _focusTrapEventCallbacks = new FocusTrapEventCallbacks();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await Js.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorFocusTrap/scripts.js");
+            await CreateFocusTrapAsync();
+        }
+    }
+
+    private async Task CreateFocusTrapAsync()
+    {
+        object element;
+        if (ForElementReference is not null)
+            element = ForElementReference();
+        else if (!string.IsNullOrEmpty(ForQuerySelector))
+            element = ForQuerySelector;
+        else if (FocusTrapElementList.Any())
+            element = FocusTrapElementList;
+        else
+            element = _focusTrapDivElementReference;
+
+        _dotNetObjectReference = DotNetObjectReference.Create(_focusTrapEventCallbacks);
+        await _module.InvokeVoidAsync("createFocusTrap", element, _dotNetObjectReference, AutoActivate);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        GC.SuppressFinalize(this);
+        await DeactivateAsync();
+        if (_module != null)
+            await _module.DisposeAsync();
+        _dotNetObjectReference?.Dispose();
+    }
+}

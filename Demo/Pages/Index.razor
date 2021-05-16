@@ -1,0 +1,68 @@
+﻿@page "/"
+
+<h2>Example 1: FocusTrap component as focus area</h2>
+<FocusTrap>
+    <input type="text" value="focusable" />
+    <input type="text" value="focusable" />
+    <input type="text" value="focusable" />
+</FocusTrap>
+<input type="text" value="not focusable" />
+
+<h2>Example 2: Div as focus area</h2>
+<FocusTrap ForElementReference="@(() => _div)">
+    <div @ref="_div">
+        <input type="text" value="focusable" />
+    </div>
+    <input type="text" value="not focusable" />
+</FocusTrap>
+<input type="text" value="not focusable" />
+
+<h2>Example 3: Class as focus area</h2>
+<FocusTrap ForQuerySelector=".focusable-class">
+    <div class="focusable-class">
+        <input type="text" value="focusable" />
+    </div>
+    <input type="text" value="not focusable" />
+</FocusTrap>
+<input type="text" value="not focusable" />
+
+<h2>Example 4: Multiple element with id as focus area</h2>
+<FocusTrap>
+    <FocusTrapElement ForQuerySelector="#focusable1" />
+    <FocusTrapElement ForQuerySelector="#focusable2" />
+    <div id="focusable1">
+        <input type="text" value="focusable" />
+    </div>
+    <div id="focusable2">
+        <input type="text" value="focusable" />
+    </div>
+    <input type="text" value="not focusable" />
+</FocusTrap>
+<input type="text" value="not focusable" />
+
+<h2>Example 5: Manually activate and deactivate with event callbacks</h2>
+<FocusTrap @ref="_focusTrap" AutoActivate="false" OnActivate="OnActivate" OnDeactivate="OnDeactivate">
+    <button type="button" @onclick="OnActivateClicked">Activate</button>
+    <button type="button" @onclick="OnDeactivateClicked">Deactivate</button>
+</FocusTrap>
+@_state
+
+@code {
+    private ElementReference _div;
+    private FocusTrap _focusTrap;
+    private string _state;
+
+    private async Task OnActivateClicked()
+    {
+        await _focusTrap.ActivateAsync();
+    }
+
+    private async Task OnDeactivateClicked()
+    {
+        await _focusTrap.DeactivateAsync();
+    }
+
+    private void OnActivate() => _state = "Activated";
+
+    private void OnDeactivate() => _state = "Deactivated";
+}

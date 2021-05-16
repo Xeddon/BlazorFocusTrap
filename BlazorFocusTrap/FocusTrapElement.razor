@@ -1,0 +1,16 @@
+﻿@code {
+    [CascadingParameter]
+    private FocusTrap FocusTrap { get; set; }
+
+    [Parameter]
+    public string ForQuerySelector { get; set; }
+
+    // TODO: ByElementReference
+
+    protected override void OnInitialized()
+    {
+        if (FocusTrap == null)
+            throw new ArgumentNullException(nameof(FocusTrap));
+        FocusTrap.FocusTrapElementList.Add(ForQuerySelector);
+    }
+}
