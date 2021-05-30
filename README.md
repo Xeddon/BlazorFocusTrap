@@ -5,7 +5,7 @@ Blazor Interop for https://github.com/focus-trap/focus-trap
 ## Install with Nuget Package Manager
 
 ```
-Install-Package BlazorFocusTrap -Version 0.0.2
+Install-Package BlazorFocusTrap -Version 0.0.3
 ```
 
 ## Include dependencies from original javascript focus-trap
