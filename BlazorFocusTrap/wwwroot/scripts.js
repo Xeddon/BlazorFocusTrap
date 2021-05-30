@@ -1,12 +1,12 @@
 ﻿"use strict";
 
-var blazorFocusTrap;
+var blazorFocusTrap = [];
 
-export function createFocusTrap(element, dotNetObjectReference, autoActivate) {
+export function createFocusTrap(element, id, dotNetObjectReference, autoActivate) {
     if (typeof window.focusTrap === "undefined")
         throw "focusTrap is undefined.";
 
-    blazorFocusTrap = window.focusTrap.createFocusTrap(element, {
+    blazorFocusTrap[id] = window.focusTrap.createFocusTrap(element, {
         onActivate: function () {
             dotNetObjectReference.invokeMethodAsync("CallbackOnActivateAsync");
         },
@@ -15,11 +15,11 @@ export function createFocusTrap(element, dotNetObjectReference, autoActivate) {
         }
     });
     if (autoActivate)
-        blazorFocusTrap.activate();
+        blazorFocusTrap[id].activate();
 }
-export function activate() {
-    blazorFocusTrap.activate();
+export function activate(id) {
+    blazorFocusTrap[id].activate();
 }
-export function deactivate() {
-    blazorFocusTrap.deactivate();
+export function deactivate(id) {
+    blazorFocusTrap[id].deactivate();
 }

@@ -47,9 +47,21 @@
 </FocusTrap>
 @_state
 
+<h2>Example 6: Nested FocusTrap</h2>
+<input type="text" value="not focusable" />
+<FocusTrap>
+    <input type="text" value="focusable before click on button 'Activate'" />
+    <button type="button" @onclick="@(async () => await _focusTrapExample6.ActivateAsync())">Activate</button>
+    <FocusTrap @ref="_focusTrapExample6" AutoActivate="false">
+        <input type="text" value="focusable" />
+        <button type="button" @onclick="@(async () => await _focusTrapExample6.DeactivateAsync())">Deactivate</button>
+    </FocusTrap>
+</FocusTrap>
+
 @code {
     private ElementReference _div;
     private FocusTrap _focusTrap;
+    private FocusTrap _focusTrapExample6;
     private string _state;
 
     private async Task OnActivateClicked()

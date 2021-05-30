@@ -30,6 +30,5 @@ For Webassembly include the following scripts into wwwroot/index.html.
 ```
 For more examples see Demo/Pages/Index.razor.
 
-## Limitations
-- At the moment there is only one `<FocusTrap>` for same time rendered supported and will be fixed in the future.
+## New functions
 - If you need more methods from original focus-trap you can request for feature or contribute it.

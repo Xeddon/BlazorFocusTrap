@@ -40,13 +40,13 @@
     public async ValueTask ActivateAsync()
     {
         if (_module != null)
-            await _module.InvokeVoidAsync("activate");
+            await _module.InvokeVoidAsync("activate", _id);
     }
 
     public async ValueTask DeactivateAsync()
     {
         if (_module != null)
-            await _module.InvokeVoidAsync("deactivate");
+            await _module.InvokeVoidAsync("deactivate", _id);
     }
 
     public IList<string> FocusTrapElementList { get; } = new List<string>();
@@ -54,6 +54,7 @@
     private IJSObjectReference _module;
     private DotNetObjectReference<FocusTrapEventCallbacks> _dotNetObjectReference;
     private FocusTrapEventCallbacks _focusTrapEventCallbacks = new FocusTrapEventCallbacks();
+    private Guid _id = Guid.NewGuid();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -77,7 +78,7 @@
             element = _focusTrapDivElementReference;
 
         _dotNetObjectReference = DotNetObjectReference.Create(_focusTrapEventCallbacks);
-        await _module.InvokeVoidAsync("createFocusTrap", element, _dotNetObjectReference, AutoActivate);
+        await _module.InvokeVoidAsync("createFocusTrap", element, _id, _dotNetObjectReference, AutoActivate);
     }
 
     public async ValueTask DisposeAsync()
